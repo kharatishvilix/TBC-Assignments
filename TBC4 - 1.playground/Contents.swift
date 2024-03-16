@@ -28,6 +28,7 @@ print("\n")
 
 // 3. while loop-ისა და switch statement-ის გამოყენებით შექმენით უსასრულო შუქნიშანი, რომელიც ბეჭდავს შემდეგნაირად. "🔴->🌕->🟢->🔴->🌕..."
 
+// timesToRepeat და timesRepeated ცვლადები იმისთვის შემოვიტანე, რომ შუქნიშანი მთლად "უსასრულო" არ ყოფილიყო (rip mac)
 var currentColor = "🌕"
 var timesToRepeat = 20
 var timesRepeated = 0
