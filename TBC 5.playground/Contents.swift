@@ -54,11 +54,23 @@ print("\(thirdArray) მასივისგან მიღებული ლ
 
 // 4. დაწერეთ ფუნქცია, რომელიც პარამეტრად იღებს Int-ების მასივს. Escaping closure-ის მეშვეობით დაბეჭდეთ მიწოდებული მასივის ჯამი 5 წამის შემდეგ. დარწმუნდით რომ closure არის escaping და გამოიძახეთ ის მას შემდეგ რაც ფუნქცია დაბრუნდება.
 
-func delayed(arrayOfInts: [Int]) {
+func delayed(arrayOfInts: [Int], completion: @escaping () -> Void) {
+    var sum = 0
+    for i in arrayOfInts {
+        sum += i
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+        completion()
+        print(sum)
+    }
 }
 
 let arrayFourth = [201, 9, 8, 16, 26]
-print(delayed(arrayOfInts: arrayFourth))
+delayed(arrayOfInts: arrayFourth) {
+    print("\n\(arrayFourth) array - ს წევრების ჯამია : ")
+}
+
+
 
 // 5.შექმენით  კონტაქტების Dict სადაც key არის სახელი და value ტელეფონის ნომერი, დაამატეთ, დაბეჭდეთ/მოძებნეთ და წაშალეთ კონტაქტი
 
@@ -67,10 +79,6 @@ var contacts: [String: Int] = [
     "shavikata": 123123,
     "tetrikata": 321321,
 ]
-
-// კონტაქტის დამატება
-contacts.updateValue(9999999, forKey: "chrelikata")
-
 
 // ფუნქცია, რომელსაც გამოაქვს სახელები და ტელეფონის ნომრები, ყოველ ჯერზე ციკლი რო არ ვწერო
 func fetchNumbers(dict: [String: Int]) {
@@ -82,9 +90,23 @@ func fetchNumbers(dict: [String: Int]) {
 
 fetchNumbers(dict: contacts)
 
+func searchContact(contactName: String, dict: [String: Int]) {
+    for (key, value) in dict {
+        if contactName == key {
+            print("კონტაქტი \(key) მოიძებნა, მისი ნომერია : \(value) \n")
+            break
+        }
+    }
+}
+
+searchContact(contactName: "Luka", dict: contacts)
+
+// კონტაქტის დამატება
+contacts.updateValue(9999999, forKey: "chrelikata")
+fetchNumbers(dict: contacts)
+
 // კონტაქტის წაშლა
 contacts.removeValue(forKey: "Luka")
-
 fetchNumbers(dict: contacts)
 
 // 6.დაწერეთ ფუნქცია რომელიც პარამეტრად იღებს [String: Int] ტიპის Dictionary-ს და დააბრუნებს ანბანურად დალაგებულ dictionary-ს key ელემენტების მასივს.
