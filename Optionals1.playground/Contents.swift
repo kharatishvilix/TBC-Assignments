@@ -43,7 +43,7 @@ func oddSpaces(removeFrom: String) -> String {
     for i in removeFrom {
         if i == " " && spaces == 0 {
             newString.append(i)
-            spaces += 1
+            spaces = 1
         } else if i != " " {
             spaces = 0
             newString.append(i)
@@ -63,7 +63,7 @@ print("\n")
 
 func filterString(filter: String) -> Int {
     let digits: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    var numbers: [String] = []
+    var numbers = ""
     var charDetected = 1
     for i in filter {
         if !digits.contains(i) && charDetected == 1 {
@@ -76,20 +76,12 @@ func filterString(filter: String) -> Int {
             charDetected = 0
         }
     }
-    var newElement = ""
     var sum = 0
-    for j in numbers {
-        if j == " " {
-            newElement.append(" ")
-            continue
-        }
-        newElement.append(j)
-    }
-    let numbersAsStrings: [String] = newElement.components(separatedBy: " ")
+    let numbersAsStrings: [String] = numbers.components(separatedBy: " ")
     for numToSum in numbersAsStrings {
         sum += Int(numToSum) ?? 0 // xCodem tavisit damifixa, stringis Intad gadayvanistvisaa sachiro
     }
-    print("\(filter) -> \(newElement.replacingOccurrences(of: " ", with: "+")) = ", terminator: "")
+    print("\(filter) -> \(numbers.replacingOccurrences(of: " ", with: "+")) = ", terminator: "")
     return sum
 }
 
