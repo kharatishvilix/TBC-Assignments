@@ -179,3 +179,60 @@ zahesiLibrary.showBorrowedBooks()
 print("\n")
 zahesiLibrary.borrowedBy(person: kharatishvili)
 zahesiLibrary.borrowedBy(person: baksi)
+
+
+
+
+// OPTIONAL
+
+// შექმენით კლასი გამონათქვამების გენერატორი, სადაც განმარტავთ გამონათქვამს-ს რომელიც იქნება სტრინგებისგან შემდგარი კოლექცია. შექმენით მეთოდი სადაც დააბრუნებთ შერჩევითად სხვადასხვა ჯოუქს და დაბეჭდავთ მას, ასევე ჩაამატეთ მეთოდი, რომელიც ჩასვამს ან ამოაკლებს გამონათქვამს სიიდან. მოცემული გაქვთ “ქილერ” გამონათქვამების სია:
+
+class killaSayings {
+    var sayings: [String] = []
+    init(sayings: [String]) {
+        self.sayings = sayings
+    }
+
+    func addSaying(phrase: String) {
+        sayings.append(phrase)
+        print("\nფრაზა - \(phrase) - დაემატა ფრაზათა კონას")
+    }
+
+    func randomSaying() {
+        var randomNum = Int.random(in: 0 ... sayings.count - 1)
+        print("\nრენდომ ფრაზა :  \(sayings[randomNum])")
+    }
+
+    func showPhrases() {
+        print("\nფრაზათა კონაში შემავალი ფრაზებია: ")
+        for saying in sayings {
+            print("• \(saying)")
+        }
+    }
+
+    func removeSaying(phrase: String) {
+        if let phraseIndex = sayings.firstIndex(of: phrase) {
+            sayings.remove(at: phraseIndex)
+            print("\nფრაზა - \(sayings[phraseIndex]) -  ამოშლილია ფრაზათა კონიდან")
+        } else {
+            print("ეგეთი სიბრძნე ჯერ არ თქმულა")
+        }
+    }
+}
+
+var frazataKona = killaSayings(sayings: ["დავინახე თუ არა მივხვდი, რომ – დევიღუპე. ",
+                                         "ისეთი აფერისტია, რომ ბანკომატებიც კი აძლევენ ფულს ვალად",
+                                         "სულის ტკივილამდე ვტკივილობ…",
+                                         "იმედის შუქი ჩამიქრა ვინმემ ასანთი მათხოვეთ",
+                                         "არავინაა უნიკალური…მე არავინ ვარ…ე.ი უნიკალური ვარ"])
+
+frazataKona.randomSaying()
+
+frazataKona.addSaying(phrase: "ბავშვი როგორ დაკარგეთ ☠️☠️☠️")
+// firstEdition.randomSaying()
+
+frazataKona.showPhrases()
+
+frazataKona.removeSaying(phrase: "სულის ტკივილამდე ვტკივილობ…")
+
+frazataKona.showPhrases()
