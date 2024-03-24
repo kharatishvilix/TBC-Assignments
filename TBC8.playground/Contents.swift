@@ -7,17 +7,18 @@ import UIKit
 // Method რომელიც ნიშნავს წიგნს როგორც დაბრუნებულს.
 
 class Book {
-    let bookID: Int
+    let bookID = UUID()
     let title: String
     let author: String
     var isBorrowed: Bool
 
-    init(bookID: Int, title: String, author: String, isBorrowed: Bool) {
-        self.bookID = bookID
+    init(bookID: UUID = UUID(), title: String, author: String, isBorrowed: Bool) {
         self.title = title
         self.author = author
         self.isBorrowed = isBorrowed
     }
+
+
 
     func borrowed() {
         isBorrowed = true
@@ -39,11 +40,11 @@ class Book {
 
 
 class Owner {
-    var ownerID: Int
+    var ownerID = UUID()
     var name: String
     var borrowedBooks: [String]
 
-    init(ownerID: Int, name: String, borrowedBooks: [String]) {
+    init(ownerID: UUID = UUID(), name: String, borrowedBooks: [String]) {
         self.ownerID = ownerID
         self.name = name
         self.borrowedBooks = borrowedBooks
@@ -53,6 +54,9 @@ class Owner {
         if !bookName.isBorrowed {
             bookName.isBorrowed = true
             borrowedBooks.append(bookName.title)
+            print("\n\(name) - მა წაიღო წიგნი : \(bookName.title)")
+        } else {
+            print("\(bookName.title) უკვე წაღებულია, აირჩიეთ სხვა წიგნი")
         }
     }
 
@@ -60,14 +64,12 @@ class Owner {
         bookName.isBorrowed = false
         if let bookIndexInArray = borrowedBooks.firstIndex(of: bookName.title) {
             borrowedBooks.remove(at: bookIndexInArray)
+            print("\n\(name) - მა დააბრუნა წიგნი : \(bookName.title)")
         } else {
             print("ამ კაცს ეს წიგნი არ აუღია და რას ერჩით")
         }
     }
 }
-
-
-
 
 // შევქმნათ Class Library
 //
@@ -92,8 +94,6 @@ class Library {
 
 
     func addANewBook(bookName: Book) {
-//                Books.insert(bookName.title, at: bookName.bookID)
-//        Book(bookID: bookName.bookID, title: bookName.title, author: bookName.author, isBorrowed: bookName.isBorrowed)
         Books.append(bookName)
     }
 
@@ -103,7 +103,7 @@ class Library {
 
     func showAvailableBooks() {
         if Books.count > 0 {
-            print("ბიბლიოთეკაში არსებული თავისუფალი წიგნებია : ")
+            print("\nბიბლიოთეკაში არსებული თავისუფალი წიგნებია : ")
             for i in Books {
                 if !i.isBorrowed {
                     print("\(i.title)")
@@ -113,41 +113,69 @@ class Library {
             print("ყველა წიგნი წაღებულია")
         }
     }
+
+    func showBorrowedBooks() {
+        if Books.count > 0 {
+            print("\nწაღებული წიგნებია : ")
+            for i in Books {
+                if i.isBorrowed {
+                    print("\(i.title)")
+                }
+            }
+        } else {
+            print("ყველა წიგნი თავისუფალია")
+        }
+    }
+
+    func borrowedBy(person: Owner) {
+        if person.borrowedBooks.count > 0 {
+            print("\(person.name) - ის მიერ წაღებული წიგნებია: ")
+            for i in person.borrowedBooks {
+                print(i)
+            }
+            print("\n")
+        } else {
+            print("\(person.name) - ს არ აქვს წაღებული არც ერთი წიგნი. ")
+        }
+    }
 }
 
 
-// წავაღებინოთ Owner-ებს წიგნები და დავაბრუნებინოთ რაღაც ნაწილი.
-// დავბეჭდოთ ინფორმაცია ბიბლიოთეკიდან წაღებულ წიგნებზე, ხელმისაწვდომ წიგნებზე და გამოვიტანოთ წაღებული წიგნები კონკრეტულად ერთი Owner-ის მიერ.
+// წიგნის შექმნა
+var leavesOfGrass = Book(title: "Leaves Of Grass", author: "Walter White", isBorrowed: false)
+var vefkhistkaosani = Book(title: "Vefkhistkaosani", author: "Shota Rustaveli", isBorrowed: false)
+var developInSwift = Book(title: "Develop In Swift Explorations", author: "Apple Education", isBorrowed: false)
+var howToBell = Book(title: "How to bell", author: "Batoni Vasili", isBorrowed: false)
+var davitisShutkebi = Book(title: "Davitis citatebi lekciis msvlelobisas", author: "Daviti", isBorrowed: false)
 
+// owner-ის შექმნა
+var kharatishvili = Owner(name: "Luka Kharatishvili", borrowedBooks: [])
+var tetriKata = Owner(name: "Macivara", borrowedBooks: [])
+var baksi = Owner(name: "Baksi", borrowedBooks: [])
 
-// შევქმნათ რამოდენიმე წიგნი და რამოდენიმე Owner-ი, შევქმნათ ბიბლიოთეკა.
-// დავამატოთ წიგნები და Owner-ები ბიბლიოთეკაში
-var leavesOfGrass = Book(bookID: 0, title: "Leaves Of Grass", author: "Walter White", isBorrowed: false)
-var vefkhistkaosani = Book(bookID: 1, title: "Vefkhistkaosani", author: "Shota Rustaveli", isBorrowed: false)
-var developInSwift = Book(bookID: 2, title: "Develop In Swift Explorations", author: "Apple Education", isBorrowed: false)
-var howToBell = Book(bookID: 3, title: "How to bell", author: "Batoni vasili", isBorrowed: false)
-var davitisShutkebi = Book(bookID: 777, title: "Davitis citatebi lekciis msvlelobisas", author: "Chat", isBorrowed: false)
-
-
-
-var kharatishvili = Owner(ownerID: 0, name: "Luka Kharatishvili", borrowedBooks: [])
-var tetriKata = Owner(ownerID: 1, name: "Macivara", borrowedBooks: [])
-var baksi = Owner(ownerID: 2, name: "Baksi", borrowedBooks: [])
-
-
+// ბიბლიოთეკის შექმნა და წიგნებისა და owner-ების დამატება
 var zahesiLibrary = Library(Books: [leavesOfGrass, vefkhistkaosani, developInSwift, howToBell, davitisShutkebi], Owners: [kharatishvili, tetriKata, baksi])
 
-
+// ყველა ხელმისაწვდომი წიგნის ნახვა
 zahesiLibrary.showAvailableBooks()
 
-print("\nwaigo 2 wigni\n")
-kharatishvili.borrowABook(bookName: howToBell)
+// წავაღებინოთ Owner-ებს წიგნები და დავაბრუნებინოთ რაღაც ნაწილი.
+kharatishvili.borrowABook(bookName: leavesOfGrass)
+kharatishvili.borrowABook(bookName: developInSwift)
 kharatishvili.borrowABook(bookName: davitisShutkebi)
+baksi.borrowABook(bookName: howToBell)
 
 zahesiLibrary.showAvailableBooks()
 
-
-print("\ndaabruna 1 wigni\n")
-
+// წიგნის დაბრუნება
 kharatishvili.returnABook(bookName: davitisShutkebi)
+kharatishvili.returnABook(bookName: developInSwift)
+
 zahesiLibrary.showAvailableBooks()
+
+
+// დავბეჭდოთ ინფორმაცია ბიბლიოთეკიდან წაღებულ წიგნებზე, ხელმისაწვდომ წიგნებზე და გამოვიტანოთ წაღებული წიგნები კონკრეტულად ერთი Owner-ის მიერ.
+zahesiLibrary.showBorrowedBooks()
+print("\n")
+zahesiLibrary.borrowedBy(person: kharatishvili)
+zahesiLibrary.borrowedBy(person: baksi)
