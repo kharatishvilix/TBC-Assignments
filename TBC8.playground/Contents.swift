@@ -40,15 +40,16 @@ class Book {
 
 
 class Owner {
-    var ownerID = UUID()
+    let ownerID = UUID()
     var name: String
     var borrowedBooks: [String]
 
-    init(ownerID: UUID = UUID(), name: String, borrowedBooks: [String]) {
-        self.ownerID = ownerID
+    init(name: String, borrowedBooks: [String]) {
         self.name = name
         self.borrowedBooks = borrowedBooks
     }
+
+
 
     func borrowABook(bookName: Book) {
         if !bookName.isBorrowed {
@@ -92,13 +93,18 @@ class Library {
         self.Owners = Owners
     }
 
-
-    func addANewBook(bookName: Book) {
-        Books.append(bookName)
-    }
-
-    func addOwners(ownerName: Owner) {
-        Owners.append(ownerName)
+    func checkOwnerByID(uniqueId: UUID) {
+        var found = false
+        for i in Owners {
+            if i.ownerID == uniqueId {
+                print("\(uniqueId) შეესაბამება ოუნერს \(i.name)")
+                found = true
+                break
+            }
+        }
+        if found == false {
+            print("\(uniqueId) არ შეესაბამება არც ერთ ოუნერს ")
+        }
     }
 
     func showAvailableBooks() {
@@ -156,6 +162,9 @@ var baksi = Owner(name: "Baksi", borrowedBooks: [])
 // ბიბლიოთეკის შექმნა და წიგნებისა და owner-ების დამატება
 var zahesiLibrary = Library(Books: [leavesOfGrass, vefkhistkaosani, developInSwift, howToBell, davitisShutkebi], Owners: [kharatishvili, tetriKata, baksi])
 
+// ownerID - ის შემოწმება --- თუმცა, UUID ყოველთვის ცვალებადი და გრძელია და, როგორც ჩანს, ხარვეზია შეკითხვაში. მაინც ვწერ:
+zahesiLibrary.checkOwnerByID(uniqueId: UUID(uuidString: "83187924-DE03-4EAD-B809-BFDBC2436B1E")!)
+
 // ყველა ხელმისაწვდომი წიგნის ნახვა
 zahesiLibrary.showAvailableBooks()
 
@@ -179,8 +188,6 @@ zahesiLibrary.showBorrowedBooks()
 print("\n")
 zahesiLibrary.borrowedBy(person: kharatishvili)
 zahesiLibrary.borrowedBy(person: baksi)
-
-
 
 
 // OPTIONAL
@@ -229,7 +236,6 @@ var frazataKona = killaSayings(sayings: ["დავინახე თუ არ
 frazataKona.randomSaying()
 
 frazataKona.addSaying(phrase: "ბავშვი როგორ დაკარგეთ ☠️☠️☠️")
-// firstEdition.randomSaying()
 
 frazataKona.showPhrases()
 
