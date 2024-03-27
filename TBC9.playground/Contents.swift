@@ -43,6 +43,7 @@ class SuperHero: SuperBeing {
 
     init(name: String, strength: Int? = nil, speed: Int? = nil, weakness: String, gender: Gender) {
         self.name = name
+        self.speed = speed
         self.strength = strength
         self.weakness = weakness
         self.gender = gender
@@ -72,8 +73,9 @@ class SuperVillain: SuperBeing {
 
     var gender: Gender
 
-    init(name: String, strength: Int? = nil, speed: Int? = nil, weakness: String, gender: Gender) {
+    init(name: String, strength: Int?, speed: Int?, weakness: String, gender: Gender) {
         self.name = name
+        self.speed = speed
         self.weakness = weakness
         self.gender = gender
     }
@@ -140,3 +142,37 @@ batman.rescue(rescued: "გელა")
 batman.combat(villainName: joker)
 joker.attack(hero: batman)
 joker.experimentation(subject: "გელა")
+
+
+// OPTIONALS
+// წარმოიდგინეთ სცენა სადაც ორი სუპერგმირი - დრეიკი და ლექს-სენი ერთმანეთს ეჯიბრებიან თუ რომელი უფრო სწრაფია. დრეიკი ამბობს რომ ის ყველაზე სწრაფია მსოფლიოში და რიანაც უდასტურებს.
+//
+// -“ლექს-სენს არცერთი შეჯიბრი არ წაუგია ისტორიაში” აცხადებს მისი კოლაბორატორი თაკო და დასძენს, რომ დრეიკი შიშისაგან უნდა კანკალებდეს, რადგან არც კი იცის რა ელოდება. ამ სუპერგმირების ბედი თქვენზეა დამოკიდებული, თქვენ უნდა გადაწყვიტოთ ვინ არის მსოფლიოში ყველაზე სწრაფი და ვინ შეძლებს ბილბორდის ტოპ ჩარტების განადგურებას.
+//
+//
+//
+// 1. დაწერეთ ჯენერიკ ფუნქცია compareSwiftness რომელიც იღებს მხოლოდ ორ პარამეტრს პირველ და მეორე სუპერგმირებს რომლებიც დაქვემდებარებულები იქნებიან SuperBeing პროტოკოლზე, ფუნქცია უნდა აბრუნებდეს სტრინგს
+// 2. ფუნქციის ბადიში შეამოწმეთ speed მნიშვნელობები ორივე სუპერგმირის
+// 3. დააბრუნეთ სტრინგი აღწერით თუ რომელი სუპერგმირია უფრო სწრაფი (გაითვალისწინეთ ისიც თუ სიჩქარეები ერთმანეთის ტოლია)
+
+func compareSwiftness<T: SuperBeing>(superHero1: T, superHero2: T) -> String {
+    var hero1Speed = 0
+    var hero2Speed = 0
+    if let temp = superHero1.speed {
+        hero1Speed = temp
+    }
+    if let temp2 = superHero2.speed {
+        hero2Speed = temp2
+    }
+
+    if hero1Speed > hero2Speed {
+        return "\(superHero1.name) უფრო სწრაფია (\(hero1Speed)), ვიდრე \(superHero2.name) (\(hero2Speed))"
+    } else if hero1Speed < hero2Speed {
+        return "\(superHero2.name) უფრო სწრაფია (\(hero2Speed)), ვიდრე \(superHero1.name) (\(hero1Speed))"
+    } else {
+        return "ორივე სუპერგმირს ერთნაირი სისწრაფე აქვთ (\(hero1Speed))."
+    }
+}
+
+print(compareSwiftness(superHero1: joker, superHero2: beka))
+// print(joker.speed)
