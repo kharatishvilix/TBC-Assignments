@@ -79,31 +79,43 @@ class SuperVillain: SuperBeing {
         self.weakness = weakness
         self.gender = gender
     }
+}
 
-    // 9.გაუწერეთ SuperVillain კლასს მეთოდი - attack - რომელიც პარამეტრად მიიღებს Superhero-ს და დაბეჭდავს - “ბოროტმ. სახელი” გეგმავს თავდასხმას და მთელი ქალაქის მიწასთან გასწორებას, საეჭვოა “სუპერგმირის სახელი” მის შეჩერებას თუ შეძლებს” (მაგ: “ჯოკერი” გეგმავს თავდასხმას და მთელი ქალაქის მიწასთან გასწორებას, საეჭვოა “ბეტმენი” მის შეჩერებას თუ შეძლებს)
-
+// ❗️❗️❗️ვინაიდან არ იყო დაზუსტებული, extension - ით უნდა გამეკეთებინა თუ არა, ზოგიერთი სუპერჰიროს მეთოდები კლასშივე ჩავწერე და ამას ექსთენშენით დავამატე.❗️❗️❗️
+// 9.გაუწერეთ SuperVillain კლასს მეთოდი - attack - რომელიც პარამეტრად მიიღებს Superhero-ს და დაბეჭდავს - “ბოროტმ. სახელი” გეგმავს თავდასხმას და მთელი ქალაქის მიწასთან გასწორებას, საეჭვოა “სუპერგმირის სახელი” მის შეჩერებას თუ შეძლებს” (მაგ: “ჯოკერი” გეგმავს თავდასხმას და მთელი ქალაქის მიწასთან გასწორებას, საეჭვოა “ბეტმენი” მის შეჩერებას თუ შეძლებს)
+extension SuperVillain {
     func attack(hero: SuperHero) {
         print("\(name) გეგმავს თავდასხმას და მთელი ქალაქის მიწასთან გასწორებას, საეჭვოა \(hero.name) მის შეჩერებას თუ შეძლებს")
     }
+}
 
-    // 10. გაუწერეთ SuperVillain კლასს მეთოდი experimentation - რომელიც პარამეტრად მიიღებს სტრინგს (subject) და დაბეჭდავს - “‘ბოროტმოქმედის სახელი’ ექსპერიმენტებს ატარებს დაუცველ მოქალაქებზე, მისი მსხვერპლი ამჟამად ‘მსხვერპლის სახელი’ აღმოჩნდა” (მაგ: “ჯოკერი” ექსპერიმენტებს ატარებს დაუცველ მოქალაქებზე, მისი მსხვერპლი ამჟამად “გელა” აღმოჩნდა)
 
+// 10. გაუწერეთ SuperVillain კლასს მეთოდი experimentation - რომელიც პარამეტრად მიიღებს სტრინგს (subject) და დაბეჭდავს - “‘ბოროტმოქმედის სახელი’ ექსპერიმენტებს ატარებს დაუცველ მოქალაქებზე, მისი მსხვერპლი ამჟამად ‘მსხვერპლის სახელი’ აღმოჩნდა” (მაგ: “ჯოკერი” ექსპერიმენტებს ატარებს დაუცველ მოქალაქებზე, მისი მსხვერპლი ამჟამად “გელა” აღმოჩნდა)
+extension SuperVillain {
     func experimentation(subject: String) {
         print("\(name) ექსპერიმენტებს ატარებს დაუცველ მოქალაქებზე, მისი მსხვერპლი ამჟამად \(subject) აღმოჩნდა")
     }
 }
 
-
-
 // 5. გაუწერეთ Superhero კლასს დამატებითი პარამეტრები outfitColor: String, equipment: String, vehicle: String
 
 extension SuperHero {
     var outfitColor: String {
-        return "No outfit"
+        get {
+            return UserDefaults.standard.string(forKey: "outfitColor") ?? "No outfit"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "outfitColor")
+        }
     }
 
     var vehicle: String {
-        return "No vehicle"
+        get {
+            return UserDefaults.standard.string(forKey: "vehicle") ?? "No vehicle"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "vehicle")
+        }
     }
 }
 
@@ -111,30 +123,45 @@ extension SuperHero {
 
 extension SuperVillain {
     var evilScheme: String {
-        return "No evilscheme yet"
+        get {
+            return UserDefaults.standard.string(forKey: "evilScheme") ?? "No evil schemes yet."
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "evilScheme")
+        }
     }
 
     var obsession: String {
-        return "No obsessions"
+        get {
+            return UserDefaults.standard.string(forKey: "obsession") ?? "No obsessions."
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "obsession")
+        }
     }
 
     var rivalry: String {
-        return "No rivalries atm"
+        get {
+            return UserDefaults.standard.string(forKey: "rivalry") ?? "No rivalries atm."
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "rivalry")
+        }
     }
 }
 
 
 // 11.შექმენით მინიმუმ 5-5 ობიექტი თითოეული SuperBeing-ის დაქონფირმებული კლასებიდან
 
-let batman = SuperHero(name: "Batman", strength: 90, speed: 80, weakness: "day?", gender: .Male)
-let spaidermeni = SuperHero(name: "Spider Man", strength: 100, speed: 100, weakness: "goblini", gender: .Male)
-let zakharichi = SuperHero(name: "Bidzina Tabagari", strength: 40, speed: 20, weakness: "zeragia", gender: .Male)
+let batman = SuperHero(name: "Batman", strength: 90, speed: 80, weakness: "Day(?)", gender: .Male)
+let spaidermeni = SuperHero(name: "Spider Man", strength: 100, speed: 100, weakness: "Goblini", gender: .Male)
+let zakharichi = SuperHero(name: "Bidzina Tabagari", strength: 40, speed: 20, weakness: "Zeragia", gender: .Male)
 let captainAmerica = SuperHero(name: "Captain America", weakness: "idk", gender: .Male)
-let ironMan = SuperHero(name: "Tony Stark", weakness: "the existence of Thor", gender: .Male)
+let ironMan = SuperHero(name: "Tony Stark", weakness: "The existence of Thor", gender: .Male)
 
 let joker = SuperVillain(name: "Joker", strength: 40, speed: 30, weakness: "Batman", gender: .Male)
 let shavikata = SuperVillain(name: "Chorna", strength: 99, speed: 100, weakness: "", gender: .Female)
-let beka = SuperVillain(name: "Beka", strength: 999999, speed: 100, weakness: "martivi amocanebis wera", gender: .Male)
+let beka = SuperVillain(name: "Beka", strength: 999999, speed: 100, weakness: "Martivi amocanebis wera", gender: .Male)
 let painter = SuperVillain(name: "Austrian Painter", strength: 50, speed: 40, weakness: "That guy from Gori", gender: .Male)
 let vader = SuperVillain(name: "Darth Vader", strength: 80, speed: 80, weakness: "Lightning", gender: .Male)
 
@@ -142,6 +169,14 @@ batman.rescue(rescued: "გელა")
 batman.combat(villainName: joker)
 joker.attack(hero: batman)
 joker.experimentation(subject: "გელა")
+
+
+// //ესენი შევამოწმე და მუშაობს 🔴
+// spaidermeni.outfitColor = "red"
+// print(spaidermeni.outfitColor)
+// print(joker.evilScheme)
+// joker.evilScheme = "This scheme is encrypted"
+// print(joker.evilScheme)
 
 
 // OPTIONALS
@@ -175,4 +210,3 @@ func compareSwiftness<T: SuperBeing>(superHero1: T, superHero2: T) -> String {
 }
 
 print(compareSwiftness(superHero1: joker, superHero2: beka))
-// print(joker.speed)
